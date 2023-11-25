@@ -8,6 +8,7 @@ import {
   InputRightAddon,
   Text,
   VStack,
+  useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
 
@@ -22,17 +23,42 @@ const AuthForm = () => {
 
   /* SWITCH LOGIN & SIGNUP SCREEN */
   const [isLogin, setIsLogin] = useState(true);
+  const [inputs, setInputs] = useState({
+    name: "",
+    username: "",
+    email: "",
+    password: "",
+  });
 
+  const toast = useToast();
+
+  /* FUNCTIONS */
   const handleLogin = () => {
+    if (!inputs.email || !inputs.password) {
+      alert("Please enter all the fields");
+      return;
+    }
+
     console.log("login");
   };
 
+  /* SIGNUP */
   const handleSignup = () => {
+    if (!inputs.name || !inputs.username || !inputs.email || !inputs.password) {
+      alert("Please enter all the fields");
+      return;
+    }
+
+    if (inputs.password.length < 6) {
+      alert("Password should be at least 6 characters long");
+      return;
+    }
+
     console.log("signup");
   };
 
   return (
-    <VStack gap={4}>
+    <VStack gap={4} w={"100%"}>
       <Box
         border={"1px solid gray"}
         borderRadius={4}
@@ -45,24 +71,40 @@ const AuthForm = () => {
           {/* INPUTS NOT VISIBLE DURING LOGIN  ->  SIGNUP ONLY */}
           {!isLogin && (
             <Flex gap={4} w={"full"}>
-              <Input placeholder="Full Name" />
-              <Input placeholder="Username" />
+              <Input
+                placeholder="Full Name"
+                value={inputs.name}
+                onChange={(e) => setInputs({ ...inputs, name: e.target.value })}
+              />
+              <Input
+                placeholder="Username"
+                value={inputs.username}
+                onChange={(e) =>
+                  setInputs({ ...inputs, username: e.target.value })
+                }
+              />
             </Flex>
           )}
 
           {/* EMAIL INPUT */}
-          <Input placeholder="Email" type="email" />
+          <Input
+            placeholder="Email"
+            type="email"
+            value={inputs.email}
+            onChange={(e) => setInputs({ ...inputs, email: e.target.value })}
+          />
 
           {/* PASSWORD INPUT */}
           <InputGroup>
-            <Input placeholder="Password" type={show ? "text" : "password"} />
-            <InputRightAddon
-              p={0}
-              pl={0.25}
-              overflow={"hidden"}
-              /* ADD LATER */
-              /* isInvalid errorBorderColor="crimson" */
-            >
+            <Input
+              placeholder="Password"
+              type={show ? "text" : "password"}
+              value={inputs.password}
+              onChange={(e) =>
+                setInputs({ ...inputs, password: e.target.value })
+              }
+            />
+            <InputRightAddon p={0} pl={0.25} overflow={"hidden"}>
               <Button
                 h="100%"
                 borderRadius={0}
@@ -85,7 +127,6 @@ const AuthForm = () => {
             colorScheme="blue"
             size={"sm"}
             fontSize={14}
-            my={2}
             py={4.5}
             onClick={() => (isLogin ? handleLogin() : handleSignup())}
           >
@@ -99,9 +140,9 @@ const AuthForm = () => {
             <Box h={"1px"} w={"100%"} bg={"gray"} />
           </Flex>
 
-          {/* LOGIN WITH GOOGLE */}
+          {/* LOGIN / SIGNUP WITH GOOGLE */}
           <Button leftIcon={<FcGoogle size={22} />} w={"full"}>
-            Log in with Google
+            {isLogin ? "Log in" : "Sign up"} with Google
           </Button>
         </VStack>
       </Box>
@@ -124,6 +165,7 @@ const AuthForm = () => {
             as={"span"}
             display={"inline"}
             onClick={() => setIsLogin(!isLogin)}
+            cursor={"pointer"}
           >
             {isLogin ? "Signup" : "Login"}
           </Text>
