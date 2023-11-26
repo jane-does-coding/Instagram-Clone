@@ -8,13 +8,13 @@ import {
   InputRightAddon,
   Text,
   VStack,
-  useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
 
 /* ICONS */
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import { FcGoogle } from "react-icons/fc";
+import { useNavigate } from "react-router-dom";
 
 const AuthForm = () => {
   /* SHOW & HIDE PASSWORD */
@@ -30,7 +30,7 @@ const AuthForm = () => {
     password: "",
   });
 
-  const toast = useToast();
+  const navigate = useNavigate();
 
   /* FUNCTIONS */
   const handleLogin = () => {
@@ -40,6 +40,7 @@ const AuthForm = () => {
     }
 
     console.log("login");
+    navigate("/");
   };
 
   /* SIGNUP */
@@ -55,6 +56,7 @@ const AuthForm = () => {
     }
 
     console.log("signup");
+    navigate("/");
   };
 
   return (
