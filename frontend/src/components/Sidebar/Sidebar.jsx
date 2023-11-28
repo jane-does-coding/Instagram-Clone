@@ -42,6 +42,7 @@ const Sidebar = () => {
         {/* ICONS */}
         <Flex direction={"column"} gap={5} cursor={"pointer"}>
           <SidebarItems />
+          new item
         </Flex>
       </Flex>
     </Box>
