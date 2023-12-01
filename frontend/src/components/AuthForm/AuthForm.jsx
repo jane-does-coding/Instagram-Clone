@@ -72,7 +72,7 @@ const AuthForm = () => {
 
           {/* INPUTS NOT VISIBLE DURING LOGIN  ->  SIGNUP ONLY */}
           {!isLogin && (
-            <Flex gap={4} w={"full"}>
+            <Flex gap={{ base: 2, md: 4 }} w={"full"}>
               <Input
                 placeholder="Full Name"
                 value={inputs.name}

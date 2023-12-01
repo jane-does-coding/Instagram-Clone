@@ -1,12 +1,12 @@
 import { Box, Link, Tooltip } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
-import { SearchLogo } from "../../assets/constants";
+import { NotificationsLogo } from "../../assets/constants";
 
-const Search = () => {
+const Notifications = () => {
   return (
     <Tooltip
       hasArrow
-      label={"Search"}
+      label={"Notifications"}
       placement="right"
       ml={1}
       openDelay={500}
@@ -23,12 +23,13 @@ const Search = () => {
         p={2}
         w={{ base: 10, md: "full" }}
         justifyContent={{ base: "center", md: "flex-start" }}
+        pr={{ base: 2, md: 4 }}
       >
-        <SearchLogo size={25} />
-        <Box display={{ base: "none", md: "block" }}>Search</Box>
+        <NotificationsLogo size={25} />
+        <Box display={{ base: "none", md: "block" }}>Notifications</Box>
       </Link>
     </Tooltip>
   );
 };
 
-export default Search;
+export default Notifications;

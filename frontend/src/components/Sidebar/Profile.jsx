@@ -1,12 +1,11 @@
-import { Box, Link, Tooltip } from "@chakra-ui/react";
+import { Avatar, Box, Link, Tooltip } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
-import { SearchLogo } from "../../assets/constants";
 
-const Search = () => {
+const Profile = () => {
   return (
     <Tooltip
       hasArrow
-      label={"Search"}
+      label={"Home"}
       placement="right"
       ml={1}
       openDelay={500}
@@ -24,11 +23,11 @@ const Search = () => {
         w={{ base: 10, md: "full" }}
         justifyContent={{ base: "center", md: "flex-start" }}
       >
-        <SearchLogo size={25} />
-        <Box display={{ base: "none", md: "block" }}>Search</Box>
+        <Avatar src="profilepic.png" size={"sm"} />
+        <Box display={{ base: "none", md: "block" }}>Profile</Box>
       </Link>
     </Tooltip>
   );
 };
 
-export default Search;
+export default Profile;
