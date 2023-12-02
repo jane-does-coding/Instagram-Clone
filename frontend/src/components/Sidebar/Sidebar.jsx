@@ -53,6 +53,7 @@ const Sidebar = () => {
           cursor={"pointer"}
           mb={"auto"}
           w={"full"}
+          alignItems={{ base: "center", md: "start" }}
         >
           <SidebarItems />
         </Flex>
