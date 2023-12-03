@@ -8,23 +8,16 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import {
-  CommentLogo,
-  NotificationsLogo,
-  UnlikeLogo,
-} from "../../assets/constants";
 import { GoPaperAirplane } from "react-icons/go";
-import { PiShareFat } from "react-icons/pi";
 import Actions from "../Actions";
 
-const PostFooter = ({ title, isProfilePage }) => {
+const PostFooter = ({ title }) => {
   const [likes, setLikes] = useState(234);
 
   return (
     <Box>
-      <Text fontSize={"sm"} fontWeight={500} my={2}>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem,
-        numquam.
+      <Text fontSize={"sm"} fontWeight={500} my={2} mb={4}>
+        {title}
       </Text>
       <Actions />
       <Flex
