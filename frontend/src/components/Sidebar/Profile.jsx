@@ -13,7 +13,7 @@ const Profile = () => {
     >
       <Link
         display={"flex"}
-        to={"/"}
+        to={"/janedoe"}
         as={RouterLink}
         alignItems={"center"}
         gap={4}
