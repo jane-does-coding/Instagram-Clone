@@ -11,10 +11,12 @@ const PORT = process.env.PORT || 5000;
 
 connectDB();
 
+// middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+// routes
 app.use("/api/users", userRoutes);
 
 app.listen(PORT, () => {
