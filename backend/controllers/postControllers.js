@@ -44,8 +44,29 @@ const getPost = async (req, res) => {
     res.status(200).json({ post });
   } catch (err) {
     res.status(500).json({ message: err.message });
-    console.log("Error in createPost: ", err.message);
+    console.log("Error in getPost: ", err.message);
   }
 };
 
-export { createPost, getPost };
+const deletePost = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const post = await Post.findById(req.params.id);
+    if (!post) {
+      return res.status(404).json({ error: "Post not found" });
+    }
+
+    if (post.postedBy.toString() !== req.user._id.toString()) {
+      return res.status(401).json({ error: "Unauthorized to delete post" });
+    }
+
+    await Post.findByIdAndDelete(req.params.id);
+
+    res.status(200).json({ message: "Post deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+    console.log("Error in deletePost: ", err.message);
+  }
+};
+
+export { createPost, getPost, deletePost };
