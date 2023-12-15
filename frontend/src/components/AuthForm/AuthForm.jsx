@@ -15,6 +15,8 @@ import { useState } from "react";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
+import userAtom from "../../atoms/userAtom";
 
 const AuthForm = () => {
   /* SHOW & HIDE PASSWORD */
@@ -31,18 +33,24 @@ const AuthForm = () => {
   });
 
   const navigate = useNavigate();
+  const setUser = useSetRecoilState(userAtom);
 
   /* FUNCTIONS */
 
   /* LOGIN */
-  const handleLogin = () => {
-    if (!inputs.email || !inputs.password) {
-      alert("Please enter all the fields");
-      return;
-    }
+  const handleLogin = async () => {
+    try {
+      if (!inputs.email || !inputs.password) {
+        alert("Please enter all the fields");
+        return;
+      }
 
-    console.log("login");
-    /*     navigate("/"); */
+      const res = console.log("login");
+      navigate("/");
+    } catch (err) {
+      alert(err);
+      console.log(err);
+    }
   };
 
   /* SIGNUP */
@@ -78,10 +86,12 @@ const AuthForm = () => {
         return;
       }
 
-      alert(data.message);
+      localStorage.setItem("user-insta", JSON.stringify(data));
+      setUser(data);
       console.log(data);
-      /*     navigate("/"); */
+      navigate("/");
     } catch (err) {
+      alert(err);
       console.log(err);
     }
   };

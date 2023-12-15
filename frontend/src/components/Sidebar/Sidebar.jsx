@@ -3,8 +3,35 @@ import { Link as RouterLink } from "react-router-dom";
 import { InstagramLogo, InstagramMobileLogo } from "../../assets/constants";
 import SidebarItems from "./SidebarItems";
 import { BiLogOut } from "react-icons/bi";
+import { useSetRecoilState } from "recoil";
+import userAtom from "../../atoms/userAtom";
 
 const Sidebar = () => {
+  const setUser = useSetRecoilState(userAtom);
+
+  const handleLogout = async () => {
+    try {
+      const res = await fetch("/api/users/logout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+
+      if (data.error) {
+        alert(data.error);
+        return;
+      }
+
+      localStorage.removeItem("user-threads");
+      setUser(null);
+    } catch (err) {
+      alert(err);
+      console.log(err);
+    }
+  };
+
   return (
     <Box
       height={"100vh"}
@@ -78,6 +105,7 @@ const Sidebar = () => {
             w={{ base: 10, md: "full" }}
             justifyContent={{ base: "center", md: "flex-start" }}
             pr={{ base: 2, md: 4 }}
+            onClick={handleLogout}
           >
             <BiLogOut size={25} />
             <Box display={{ base: "none", md: "block" }}>Logout</Box>
