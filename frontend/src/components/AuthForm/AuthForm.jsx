@@ -33,6 +33,8 @@ const AuthForm = () => {
   const navigate = useNavigate();
 
   /* FUNCTIONS */
+
+  /* LOGIN */
   const handleLogin = () => {
     if (!inputs.email || !inputs.password) {
       alert("Please enter all the fields");
@@ -40,23 +42,48 @@ const AuthForm = () => {
     }
 
     console.log("login");
-    navigate("/");
+    /*     navigate("/"); */
   };
 
   /* SIGNUP */
-  const handleSignup = () => {
-    if (!inputs.name || !inputs.username || !inputs.email || !inputs.password) {
-      alert("Please enter all the fields");
-      return;
-    }
+  const handleSignup = async () => {
+    try {
+      if (
+        !inputs.name ||
+        !inputs.username ||
+        !inputs.email ||
+        !inputs.password
+      ) {
+        alert("Please enter all the fields");
+        return;
+      }
 
-    if (inputs.password.length < 6) {
-      alert("Password should be at least 6 characters long");
-      return;
-    }
+      if (inputs.password.length < 6) {
+        alert("Password should be at least 6 characters long");
+        return;
+      }
 
-    console.log("signup");
-    navigate("/");
+      const res = await fetch("/api/users/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(inputs),
+      });
+
+      const data = await res.json();
+
+      if (data.error) {
+        alert(data.error);
+        return;
+      }
+
+      alert(data.message);
+      console.log(data);
+      /*     navigate("/"); */
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
