@@ -24,7 +24,7 @@ const Sidebar = () => {
         return;
       }
 
-      localStorage.removeItem("user-threads");
+      localStorage.removeItem("user-insta");
       setUser(null);
     } catch (err) {
       alert(err);

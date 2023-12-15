@@ -45,7 +45,25 @@ const AuthForm = () => {
         return;
       }
 
-      const res = console.log("login");
+      const res = await fetch("/api/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(inputs),
+      });
+
+      const data = await res.json();
+
+      if (data.error) {
+        alert(data.error);
+        return;
+      }
+
+      localStorage.setItem("user-insta", JSON.stringify(data));
+      setUser(data);
+
+      console.log(data);
       navigate("/");
     } catch (err) {
       alert(err);
