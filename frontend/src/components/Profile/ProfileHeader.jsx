@@ -19,8 +19,10 @@ import {
 } from "@chakra-ui/react";
 import React, { useRef, useState } from "react";
 import { useParams } from "react-router-dom";
+import userAtom from "../../atoms/userAtom";
+import { useRecoilValue } from "recoil";
 
-const ProfileHeader = () => {
+const ProfileHeader = ({ user }) => {
   /* UI USE ONLY !!!!!!!!!!!!!!! */
   const [isUser, setIsUser] = useState(true);
   const [isFollowing, setIsFollowing] = useState(true);
@@ -34,7 +36,9 @@ const ProfileHeader = () => {
     password: "",
     profilePic: "",
   });
+
   const { userId } = useParams();
+  const currentUser = useRecoilValue(userAtom);
 
   const handleUserUpdate = async () => {
     try {
@@ -61,6 +65,8 @@ const ProfileHeader = () => {
     }
   };
 
+  /*   console.log(currentUser, user); */
+
   return (
     <>
       <Flex direction={{ base: "column", md: "row" }} w={"full"} gap={10}>
@@ -83,8 +89,8 @@ const ProfileHeader = () => {
             alignItems={"center"}
             w={"full"}
           >
-            <Text fontSize={{ base: "sm", md: "lg" }}>asaprogrammer_</Text>
-            {isUser ? (
+            <Text fontSize={{ base: "sm", md: "lg" }}>{user.username}</Text>
+            {currentUser._id == user._id ? (
               <Button
                 colorScheme="gray"
                 size={{ base: "xs", md: "sm" }}
@@ -97,7 +103,6 @@ const ProfileHeader = () => {
               >
                 {/* UI USE ONLY !!!!!!!!!!!!!!! */}
                 Edit Profile
-                {/*  UI USE ONLY !!!!!!!!!!!!!!!  */}
               </Button>
             ) : (
               <Button
@@ -112,7 +117,6 @@ const ProfileHeader = () => {
               >
                 {/* UI USE ONLY !!!!!!!!!!!!!!! */}
                 {isFollowing ? "Unfollow" : "Follow"}
-                {/*  UI USE ONLY !!!!!!!!!!!!!!!  */}
               </Button>
             )}
           </Flex>
@@ -120,17 +124,24 @@ const ProfileHeader = () => {
           {/* User profile info */}
           <Flex direction={"row"} gap={4} alignSelf={"start"}>
             <Text color={"whiteAlpha.700"}>4 Posts</Text>
-            <Text color={"whiteAlpha.700"}>149 Followers</Text>
-            <Text color={"whiteAlpha.700"}>168 Following</Text>
+            <Text color={"whiteAlpha.700"}>
+              {user.followers.length} Followers
+            </Text>
+            <Text color={"whiteAlpha.700"}>
+              {user.following.length} Following
+            </Text>
           </Flex>
 
           {/* Name of the user */}
           <Text fontSize={"sm"} fontWeight={"bold"}>
-            As a Programmer
+            {user.name}
           </Text>
           {/* Description / Bio */}
-          <Text>
-            Tutorials that are meant to level up your skills as a programmer
+          <Text
+            fontWeight={"semibold"}
+            color={user.bio ? "white" : "whiteAlpha.400"}
+          >
+            {user.bio || "This user doesn't has a biography"}
           </Text>
         </VStack>
       </Flex>
