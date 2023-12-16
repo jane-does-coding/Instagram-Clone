@@ -139,7 +139,7 @@ const ProfileHeader = ({ user }) => {
           {/* Description / Bio */}
           <Text
             fontWeight={"semibold"}
-            color={user.bio ? "white" : "whiteAlpha.400"}
+            color={user.bio ? "white" : "whiteAlpha.600"}
           >
             {user.bio || "This user doesn't has a biography"}
           </Text>
