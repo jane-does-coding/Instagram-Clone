@@ -56,7 +56,7 @@ const FeedPosts = () => {
           />
           <FeedPost
             img="/img3.png"
-            title="Third post"
+            title="My awesome drawing of the Tower Bridge!"
             avatar="/img3.png"
             username="burak_935"
           />

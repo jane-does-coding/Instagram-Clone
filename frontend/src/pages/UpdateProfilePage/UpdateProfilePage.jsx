@@ -8,18 +8,41 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import React, { useRef, useState } from "react";
+import { useRecoilState } from "recoil";
+import userAtom from "../../atoms/userAtom";
+import usePreviewImage from "../../hooks/usePreviewImage";
 
 const UpdateProfilePage = () => {
+  const [user, setUser] = useRecoilState(userAtom);
   const [inputs, setInputs] = useState({
-    name: "",
-    username: "",
-    email: "",
-    password: "",
-    profilePic: "",
+    name: user.name,
+    username: user.username,
+    email: user.email,
+    password: user.profilePic,
+    profilePic: user.profilePic,
+    bio: user.bio,
   });
   const imageRef = useRef(null);
 
-  const handleUserUpdate = () => {};
+  const { handleImageChange, imgUrl } = usePreviewImage();
+
+  const handleUserUpdate = async () => {
+    try {
+      const updatedUser = {
+        name: inputs.name || user.name,
+        username: inputs.username || user.username,
+        email: inputs.email || user.email,
+        password: inputs.password || user.password,
+        profilePic: inputs.profilePic,
+        bio: inputs.bio,
+      };
+
+      console.log(updatedUser);
+    } catch (err) {
+      alert(err);
+      console.log(err);
+    }
+  };
 
   return (
     <Container
@@ -44,10 +67,10 @@ const UpdateProfilePage = () => {
       <Flex
         direction={{ base: "column", md: "row" }}
         gap={2}
-        w={{ base: "90%", sm: "90%", md: "full" }}
+        w={{ base: "100%", sm: "95%", md: "full" }}
         mx={"auto"}
         p={4}
-        px={{ base: "5%", lg: "10%" }}
+        px={2}
       >
         {/* LEFT CONTENT */}
         <Flex
@@ -60,7 +83,7 @@ const UpdateProfilePage = () => {
         >
           <Flex direction={"column"} gap={{ base: 2 }} maxH={"fit-content"}>
             <Avatar
-              src="/img3.png"
+              src={imgUrl || user.profilePic}
               w={"10rem"}
               h={"10rem"}
               m={"auto"}
@@ -68,7 +91,13 @@ const UpdateProfilePage = () => {
               mb={4}
             />
 
-            <Input type="file" hidden ref={imageRef} />
+            <Input
+              type="file"
+              hidden
+              ref={imageRef}
+              value={inputs.profilePic}
+              onChange={handleImageChange}
+            />
             <Button
               onClick={() => {
                 imageRef.current.click();
