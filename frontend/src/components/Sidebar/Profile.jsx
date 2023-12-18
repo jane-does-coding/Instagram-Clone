@@ -1,7 +1,12 @@
 import { Avatar, Box, Link, Tooltip } from "@chakra-ui/react";
+import { useEffect } from "react";
 import { Link as RouterLink } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import userAtom from "../../atoms/userAtom";
 
 const Profile = () => {
+  const [user, setUser] = useRecoilState(userAtom);
+
   return (
     <Tooltip
       hasArrow
@@ -23,7 +28,7 @@ const Profile = () => {
         w={{ base: 10, md: "full" }}
         justifyContent={{ base: "center", md: "flex-start" }}
       >
-        <Avatar src="profilepic.png" size={"sm"} />
+        <Avatar src={user.profilePic} size={"sm"} />
         <Box display={{ base: "none", md: "block" }}>Profile</Box>
       </Link>
     </Tooltip>

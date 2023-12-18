@@ -32,13 +32,10 @@ const ProfileLiked = () => {
 
       {!isLoading && (
         <>
-          <ProfilePost img="/img1.png" />
-          <ProfilePost img="/img2.png" />
-          <ProfilePost img="/img3.png" />
-          <ProfilePost img="/img4.png" />
-          <ProfilePost img="/img1.png" />
-          <ProfilePost img="/img1.png" />
-          <ProfilePost img="/img3.png" />
+          <ProfilePost img="https://placehold.co/800@2x.png" />
+          <ProfilePost img="https://placehold.co/800@2x.png" />
+          <ProfilePost img="https://placehold.co/800@2x.png" />
+          <ProfilePost img="https://placehold.co/800@2x.png" />
         </>
       )}
     </Grid>
