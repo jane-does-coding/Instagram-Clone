@@ -141,7 +141,7 @@ const followUnfollowUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
   const { name, password, email, username, bio } = req.body;
-  let profilePic = req.body;
+  let { profilePic } = req.body;
 
   const userId = req.user._id;
 
@@ -149,10 +149,10 @@ const updateUser = async (req, res) => {
     let user = await User.findById(userId);
     if (!user) return res.status(400).json({ error: "User not found" });
 
-    if (req.params.id.toString() !== userId.toString())
+    if (req.params.id !== userId.toString())
       return res
         .status(400)
-        .json({ error: "You cannot update other users profiles" });
+        .json({ error: "You cannot update other user's profile" });
 
     if (password) {
       const salt = await bcrypt.genSalt(10);
@@ -166,15 +166,16 @@ const updateUser = async (req, res) => {
           user.profilePic.split("/").pop().split(".")[0]
         );
       }
+
       const uploadedResponse = await cloudinary.uploader.upload(profilePic);
       profilePic = uploadedResponse.secure_url;
     }
 
     user.name = name || user.name;
     user.email = email || user.email;
-    user.bio = bio || user.bio;
     user.username = username || user.username;
     user.profilePic = profilePic || user.profilePic;
+    user.bio = bio || user.bio;
 
     user = await user.save();
 
