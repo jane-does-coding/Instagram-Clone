@@ -44,6 +44,19 @@ const ProfileHeader = ({ user }) => {
       });
       const data = await res.json();
 
+      if (data.error) {
+        alert(data.error);
+        console.log(data.error);
+        return;
+      }
+
+      // Simulate adding or unadding followers in UI
+      if (isFollowing) {
+        user.followers.pop();
+      } else {
+        user.followers.push(currentUser._id);
+      }
+
       setIsFollowing(!isFollowing);
 
       console.log(data);

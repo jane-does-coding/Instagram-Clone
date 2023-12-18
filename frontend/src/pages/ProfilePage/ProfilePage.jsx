@@ -35,7 +35,7 @@ const ProfilePage = () => {
     };
 
     getUser();
-  }, []);
+  }, [username]);
 
   return (
     <Container maxW={"container.lg"} py={5}>
