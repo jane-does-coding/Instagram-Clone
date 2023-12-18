@@ -10,9 +10,13 @@ const SuggestedHeader = () => {
   return (
     <Flex justifyContent={"space-between"} alignItems={"center"} w={"full"}>
       <Flex alignItems={"center"} gap={2}>
-        <Avatar name="As a programmer" src={user.profilePic} size={"lg"} />
+        <Avatar
+          name={user ? user.name : ""}
+          src={user.profilePic}
+          size={"lg"}
+        />
         <Text fontSize={12} fontWeight={"bold"}>
-          {user.username}
+          {user ? user.username : ""}
         </Text>
       </Flex>
       <Link

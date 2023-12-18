@@ -23,49 +23,35 @@ import userAtom from "../../atoms/userAtom";
 import { useRecoilValue } from "recoil";
 
 const ProfileHeader = ({ user }) => {
-  /* UI USE ONLY !!!!!!!!!!!!!!! */
-  const [isUser, setIsUser] = useState(true);
-  const [isFollowing, setIsFollowing] = useState(true);
-  /* UI USE ONLY !!!!!!!!!!!!!!! */
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const imageRef = useRef(null);
-  const [inputs, setInputs] = useState({
-    name: "",
-    username: "",
-    email: "",
-    password: "",
-    profilePic: "",
-  });
-
-  const { userId } = useParams();
   const currentUser = useRecoilValue(userAtom);
 
-  const handleUserUpdate = async () => {
+  const [isFollowing, setIsFollowing] = useState(
+    user.followers.includes(currentUser._id)
+  );
+
+  const handleFollowUnfollow = async () => {
     try {
-      /* FETCH */
-      const res = await fetch(`/api/users/update/${userId}`, {
+      if (user.id === currentUser._id) {
+        alert("You cannot follow or unfollow yourself");
+        return;
+      }
+
+      const res = await fetch(`/api/users/follow/${user._id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(inputs),
       });
       const data = await res.json();
 
-      if (data.error) {
-        alert(data.error);
-      } else {
-        alert("all good");
-      }
+      setIsFollowing(!isFollowing);
 
-      /* CONSOLE INPUTS */
       console.log(data);
     } catch (err) {
+      console.log(err);
       alert(err);
     }
   };
-
-  /*   console.log(currentUser, user); */
 
   return (
     <>
@@ -77,7 +63,11 @@ const ProfileHeader = ({ user }) => {
           alignSelf={"flex-start"}
           mx={"auto"}
         >
-          <Avatar src={user.profilePic || ""} alt={"Profile image"} />
+          <Avatar
+            name={user ? user.name : ""}
+            src={user.profilePic || ""}
+            alt={"Profile image"}
+          />
         </AvatarGroup>
 
         {/* Info */}
@@ -107,11 +97,8 @@ const ProfileHeader = ({ user }) => {
                 bg={"whiteAlpha.900"}
                 color={"blackAlpha.800"}
                 _hover={{ bg: "whiteAlpha.700" }}
-                /* UI USE ONLY !!!!!!!!!!!!!!! */
-                onClick={() => setIsFollowing(!isFollowing)}
-                /* UI USE ONLY !!!!!!!!!!!!!!! */
+                onClick={handleFollowUnfollow}
               >
-                {/* UI USE ONLY !!!!!!!!!!!!!!! */}
                 {isFollowing ? "Unfollow" : "Follow"}
               </Button>
             )}
@@ -141,130 +128,6 @@ const ProfileHeader = ({ user }) => {
           </Text>
         </VStack>
       </Flex>
-
-      {/* MODAL */}
-
-      <Modal
-        isCentered={true}
-        size={{ base: "3xl", md: "2xl", lg: "3xl", xl: "3xl" }}
-        isOpen={isOpen}
-        onClose={onClose}
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalCloseButton />
-          <ModalHeader
-            bg={"gray.900"}
-            display={"flex"}
-            alignItems={"center"}
-            justifyContent={"space-between"}
-          >
-            Edit Profile
-          </ModalHeader>
-          <ModalBody bg={"black"} pb={5}>
-            {/* MODAL BODY */}
-            <Flex
-              direction={"row"}
-              gap={2}
-              w={{ base: "90%", sm: "90%", md: "full" }}
-              mx={"auto"}
-            >
-              {/* LEFT CONTENT */}
-              <Flex
-                flex={1}
-                flexDir={"column"}
-                px={2}
-                display={"flex"}
-                justifyContent={"center"}
-                py={2}
-              >
-                <Flex
-                  direction={"column"}
-                  gap={{ base: 2 }}
-                  maxH={"fit-content"}
-                >
-                  <Avatar
-                    src="/img3.png"
-                    size={"2xl"}
-                    m={"auto"}
-                    my={2}
-                    mb={4}
-                  />
-
-                  <Input type="file" hidden ref={imageRef} />
-                  <Button
-                    onClick={() => {
-                      imageRef.current.click();
-                    }}
-                    mb={2}
-                  >
-                    + Add Image
-                  </Button>
-
-                  <Input
-                    placeholder="Full name"
-                    value={inputs.name}
-                    onChange={(e) =>
-                      setInputs({ ...inputs, name: e.target.value })
-                    }
-                  />
-                  <Input
-                    placeholder="Username"
-                    value={inputs.username}
-                    onChange={(e) =>
-                      setInputs({ ...inputs, username: e.target.value })
-                    }
-                  />
-                </Flex>
-              </Flex>
-
-              {/* RIGHT CONTENT */}
-              <Flex
-                flex={1}
-                flexDir={"column"}
-                px={2}
-                display={"flex"}
-                justifyContent={"center"}
-                py={2}
-              >
-                <Flex
-                  direction={"column"}
-                  gap={{ base: 2 }}
-                  maxH={"fit-content"}
-                >
-                  <Input
-                    placeholder="Password"
-                    value={inputs.password}
-                    onChange={(e) =>
-                      setInputs({ ...inputs, password: e.target.value })
-                    }
-                  />
-                  <Input
-                    placeholder="Email"
-                    value={inputs.email}
-                    onChange={(e) =>
-                      setInputs({ ...inputs, email: e.target.value })
-                    }
-                  />
-
-                  <Textarea
-                    placeholder="Add a bio to your account..."
-                    h={"200px"}
-                    resize={"none"}
-                    value={inputs.bio}
-                    onChange={(e) =>
-                      setInputs({ ...inputs, bio: e.target.value })
-                    }
-                  />
-                </Flex>
-              </Flex>
-            </Flex>
-            <Button mt={4} w={"full"} onClick={handleUserUpdate}>
-              Update
-            </Button>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
     </>
   );
 };
