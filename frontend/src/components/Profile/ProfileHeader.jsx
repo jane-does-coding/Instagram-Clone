@@ -24,12 +24,14 @@ import { useRecoilValue } from "recoil";
 
 const ProfileHeader = ({ user }) => {
   const currentUser = useRecoilValue(userAtom);
+  const [loading, setLoading] = useState(false);
 
   const [isFollowing, setIsFollowing] = useState(
     user.followers.includes(currentUser._id)
   );
 
   const handleFollowUnfollow = async () => {
+    setLoading(true);
     try {
       if (user.id === currentUser._id) {
         alert("You cannot follow or unfollow yourself");
@@ -63,6 +65,8 @@ const ProfileHeader = ({ user }) => {
     } catch (err) {
       console.log(err);
       alert(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -111,6 +115,8 @@ const ProfileHeader = ({ user }) => {
                 color={"blackAlpha.800"}
                 _hover={{ bg: "whiteAlpha.700" }}
                 onClick={handleFollowUnfollow}
+                opacity={loading ? "0.75" : "1"}
+                cursor={loading ? "not-allowed" : null}
               >
                 {isFollowing ? "Unfollow" : "Follow"}
               </Button>

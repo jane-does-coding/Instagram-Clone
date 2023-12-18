@@ -26,9 +26,11 @@ const UpdateProfilePage = () => {
   const navigate = useNavigate();
 
   const { handleImageChange, imgUrl } = usePreviewImage();
+  const [loading, setLoading] = useState(false);
 
   const handleUserUpdate = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const res = await fetch(`/api/users/update/${user._id}`, {
         method: "PUT",
@@ -52,6 +54,8 @@ const UpdateProfilePage = () => {
     } catch (err) {
       alert(err);
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -171,6 +175,8 @@ const UpdateProfilePage = () => {
                 w={"full"}
                 type="submit"
                 mb={6}
+                opacity={loading ? "0.75" : "1"}
+                cursor={loading ? "not-allowed" : null}
               >
                 Update
               </Button>
