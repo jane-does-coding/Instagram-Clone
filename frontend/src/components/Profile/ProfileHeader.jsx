@@ -18,7 +18,7 @@ import {
   ModalHeader,
 } from "@chakra-ui/react";
 import React, { useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import userAtom from "../../atoms/userAtom";
 import { useRecoilValue } from "recoil";
 
@@ -77,7 +77,7 @@ const ProfileHeader = ({ user }) => {
           alignSelf={"flex-start"}
           mx={"auto"}
         >
-          <Avatar src="/profilepic.png" alt={"Profile image"} />
+          <Avatar src={user.profilePic || ""} alt={"Profile image"} />
         </AvatarGroup>
 
         {/* Info */}
@@ -97,12 +97,8 @@ const ProfileHeader = ({ user }) => {
                 bg={"whiteAlpha.900"}
                 color={"blackAlpha.800"}
                 _hover={{ bg: "whiteAlpha.700" }}
-                /* UI USE ONLY !!!!!!!!!!!!!!! */
-                onClick={onOpen}
-                /* UI USE ONLY !!!!!!!!!!!!!!! */
               >
-                {/* UI USE ONLY !!!!!!!!!!!!!!! */}
-                Edit Profile
+                <Link to={"/update"}>Edit Profile</Link>
               </Button>
             ) : (
               <Button

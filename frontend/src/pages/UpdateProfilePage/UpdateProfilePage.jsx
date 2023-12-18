@@ -18,26 +18,31 @@ const UpdateProfilePage = () => {
     name: user.name,
     username: user.username,
     email: user.email,
-    password: user.profilePic,
-    profilePic: user.profilePic,
     bio: user.bio,
+    password: "",
   });
   const imageRef = useRef(null);
 
   const { handleImageChange, imgUrl } = usePreviewImage();
 
-  const handleUserUpdate = async () => {
+  const handleUserUpdate = async (e) => {
+    e.preventDefault();
     try {
-      const updatedUser = {
-        name: inputs.name || user.name,
-        username: inputs.username || user.username,
-        email: inputs.email || user.email,
-        password: inputs.password || user.password,
-        profilePic: inputs.profilePic,
-        bio: inputs.bio,
-      };
+      const res = await fetch(`/api/users/update/${user._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ...inputs, profilePic: imgUrl }),
+      });
+      const data = await res.json(); // updated user object
 
-      console.log(updatedUser);
+      if (data.error) {
+        alert(data.error);
+        return;
+      }
+
+      console.log(data);
     } catch (err) {
       alert(err);
       console.log(err);
@@ -45,126 +50,129 @@ const UpdateProfilePage = () => {
   };
 
   return (
-    <Container
-      minH={"100vh"}
-      display={"flex"}
-      justifyContent={"center"}
-      alignItems={"center"}
-      flexDir={"column"}
-      minW={"100%"}
-    >
-      <Text
-        my={4}
-        mx={"auto"}
-        fontSize={"2rem"}
-        fontWeight={"semibold"}
-        w={"full"}
-        textAlign={"center"}
-        mt={8}
+    <form onSubmit={handleUserUpdate}>
+      <Container
+        minH={"100vh"}
+        display={"flex"}
+        justifyContent={"center"}
+        alignItems={"center"}
+        flexDir={"column"}
+        minW={"100%"}
       >
-        Update Profile
-      </Text>
-      <Flex
-        direction={{ base: "column", md: "row" }}
-        gap={2}
-        w={{ base: "100%", sm: "95%", md: "full" }}
-        mx={"auto"}
-        p={4}
-        px={2}
-      >
-        {/* LEFT CONTENT */}
-        <Flex
-          flex={1}
-          flexDir={"column"}
-          px={2}
-          display={"flex"}
-          justifyContent={"center"}
-          py={{ base: 0, md: 2 }}
+        <Text
+          my={4}
+          mx={"auto"}
+          fontSize={"2rem"}
+          fontWeight={"semibold"}
+          w={"full"}
+          textAlign={"center"}
+          mt={8}
         >
-          <Flex direction={"column"} gap={{ base: 2 }} maxH={"fit-content"}>
-            <Avatar
-              src={imgUrl || user.profilePic}
-              w={"10rem"}
-              h={"10rem"}
-              m={"auto"}
-              mt={2}
-              mb={4}
-            />
+          Update Profile
+        </Text>
+        <Flex
+          direction={{ base: "column", md: "row" }}
+          gap={2}
+          w={{ base: "100%", sm: "95%", md: "full" }}
+          mx={"auto"}
+          p={4}
+          px={2}
+        >
+          {/* LEFT CONTENT */}
+          <Flex
+            flex={1}
+            flexDir={"column"}
+            px={2}
+            display={"flex"}
+            justifyContent={"center"}
+            py={{ base: 0, md: 2 }}
+          >
+            <Flex direction={"column"} gap={{ base: 2 }} maxH={"fit-content"}>
+              <Avatar
+                src={imgUrl || user.profilePic || ""}
+                w={"10rem"}
+                h={"10rem"}
+                m={"auto"}
+                mt={2}
+                mb={4}
+              />
 
-            <Input
-              type="file"
-              hidden
-              ref={imageRef}
-              value={inputs.profilePic}
-              onChange={handleImageChange}
-            />
-            <Button
-              onClick={() => {
-                imageRef.current.click();
-              }}
-              mb={2}
-            >
-              + Add Image
-            </Button>
+              <Input
+                type="file"
+                hidden
+                ref={imageRef}
+                onChange={handleImageChange}
+              />
+              <Button
+                onClick={() => {
+                  imageRef.current.click();
+                }}
+                mb={2}
+              >
+                + Add Image
+              </Button>
 
-            <Input
-              placeholder="Full name"
-              value={inputs.name}
-              onChange={(e) => setInputs({ ...inputs, name: e.target.value })}
-            />
-            <Input
-              placeholder="Username"
-              value={inputs.username}
-              onChange={(e) =>
-                setInputs({ ...inputs, username: e.target.value })
-              }
-            />
+              <Input
+                placeholder="Full name"
+                value={inputs.name}
+                onChange={(e) => setInputs({ ...inputs, name: e.target.value })}
+              />
+              <Input
+                placeholder="Username"
+                value={inputs.username}
+                onChange={(e) =>
+                  setInputs({ ...inputs, username: e.target.value })
+                }
+              />
+            </Flex>
+          </Flex>
+
+          {/* RIGHT CONTENT */}
+          <Flex
+            flex={1}
+            flexDir={"column"}
+            px={2}
+            display={"flex"}
+            justifyContent={"center"}
+            py={{ base: 0, md: 2 }}
+          >
+            <Flex direction={"column"} gap={{ base: 2 }} maxH={"fit-content"}>
+              <Input
+                placeholder="Password"
+                value={inputs.password}
+                onChange={(e) =>
+                  setInputs({ ...inputs, password: e.target.value })
+                }
+              />
+              <Input
+                placeholder="Email"
+                value={inputs.email}
+                onChange={(e) =>
+                  setInputs({ ...inputs, email: e.target.value })
+                }
+              />
+
+              <Textarea
+                placeholder="Add a bio to your account..."
+                h={"200px"}
+                resize={"none"}
+                value={inputs.bio}
+                onChange={(e) => setInputs({ ...inputs, bio: e.target.value })}
+              />
+              <Button
+                mt={4}
+                alignSelf={"center"}
+                w={"full"}
+                type="submit"
+                mb={6}
+              >
+                Update
+              </Button>
+            </Flex>
           </Flex>
         </Flex>
-
-        {/* RIGHT CONTENT */}
-        <Flex
-          flex={1}
-          flexDir={"column"}
-          px={2}
-          display={"flex"}
-          justifyContent={"center"}
-          py={{ base: 0, md: 2 }}
-        >
-          <Flex direction={"column"} gap={{ base: 2 }} maxH={"fit-content"}>
-            <Input
-              placeholder="Password"
-              value={inputs.password}
-              onChange={(e) =>
-                setInputs({ ...inputs, password: e.target.value })
-              }
-            />
-            <Input
-              placeholder="Email"
-              value={inputs.email}
-              onChange={(e) => setInputs({ ...inputs, email: e.target.value })}
-            />
-
-            <Textarea
-              placeholder="Add a bio to your account..."
-              h={"200px"}
-              resize={"none"}
-              value={inputs.bio}
-              onChange={(e) => setInputs({ ...inputs, bio: e.target.value })}
-            />
-            <Button
-              mt={4}
-              alignSelf={"center"}
-              w={"full"}
-              onClick={handleUserUpdate}
-              mb={6}
-            >
-              Update
-            </Button>
-          </Flex>
-        </Flex>
-      </Flex>
-    </Container>
+      </Container>
+    </form>
   );
 };
 

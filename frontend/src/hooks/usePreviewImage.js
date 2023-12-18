@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
-const usePreviewImage = () => {
+const usePreviewImg = () => {
   const [imgUrl, setImgUrl] = useState(null);
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file && file.type.startsWith("image/")) {
@@ -16,10 +17,8 @@ const usePreviewImage = () => {
       alert("Invalid file type");
       setImgUrl(null);
     }
-    console.log(imgUrl);
   };
-
-  return { handleImageChange, imgUrl };
+  return { handleImageChange, imgUrl, setImgUrl };
 };
 
-export default usePreviewImage;
+export default usePreviewImg;
