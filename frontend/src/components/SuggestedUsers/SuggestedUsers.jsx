@@ -25,27 +25,27 @@ const SuggestedUsers = () => {
 
       <SuggestedUser
         followers={1625}
-        avatar={"/img1.png"}
+        avatar={"https://placehold.co/800@2x.png"}
         name={"Emily Rodriguez"}
       />
       <SuggestedUser
         followers={53}
-        avatar={"/img2.png"}
+        avatar={"https://placehold.co/800@2x.png"}
         name={"Benjamin Taylor"}
       />
       <SuggestedUser
         followers={173}
-        avatar={"/img3.png"}
+        avatar={"https://placehold.co/800@2x.png"}
         name={"Mia Johnson"}
       />
       <SuggestedUser
         followers={938}
-        avatar={"/img4.png"}
+        avatar={"https://placehold.co/800@2x.png"}
         name={"Sophia Martinez"}
       />
       <SuggestedUser
         followers={532}
-        avatar={"/img3.png"}
+        avatar={"https://placehold.co/800@2x.png"}
         name={"Liam Anderson"}
       />
 

@@ -43,27 +43,27 @@ const FeedPosts = () => {
         <>
           {/* POSTS */}
           <FeedPost
-            img="/img1.png"
+            img="https://placehold.co/800@2x.png"
             title="First post"
-            avatar="/img1.png"
+            avatar="https://placehold.co/800@2x.png"
             username="janedoe_846"
           />
           <FeedPost
-            img="/img2.png"
+            img="https://placehold.co/800@2x.png"
             title="Second post"
-            avatar="/img2.png"
+            avatar="https://placehold.co/800@2x.png"
             username="johndoe_103"
           />
           <FeedPost
-            img="/img3.png"
+            img="https://placehold.co/800@2x.png"
             title="My awesome drawing of the Tower Bridge!"
-            avatar="/img3.png"
+            avatar="https://placehold.co/800@2x.png"
             username="burak_935"
           />
           <FeedPost
-            img="/img4.png"
+            img="https://placehold.co/800@2x.png"
             title="Fourth post"
-            avatar="/img4.png"
+            avatar="https://placehold.co/800@2x.png"
             username="anotheruser_026"
           />
         </>

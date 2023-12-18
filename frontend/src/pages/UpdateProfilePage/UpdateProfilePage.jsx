@@ -11,6 +11,7 @@ import React, { useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import userAtom from "../../atoms/userAtom";
 import usePreviewImage from "../../hooks/usePreviewImage";
+import { useNavigate } from "react-router-dom";
 
 const UpdateProfilePage = () => {
   const [user, setUser] = useRecoilState(userAtom);
@@ -22,6 +23,7 @@ const UpdateProfilePage = () => {
     password: "",
   });
   const imageRef = useRef(null);
+  const navigate = useNavigate();
 
   const { handleImageChange, imgUrl } = usePreviewImage();
 
@@ -42,7 +44,11 @@ const UpdateProfilePage = () => {
         return;
       }
 
-      console.log(data);
+      alert("Profile updated successfully");
+      navigate("/");
+      setUser(data.user);
+      localStorage.removeItem("user-insta");
+      localStorage.setItem("user-insta", JSON.stringify(data.user));
     } catch (err) {
       alert(err);
       console.log(err);
