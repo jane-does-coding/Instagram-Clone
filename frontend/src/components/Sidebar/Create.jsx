@@ -14,7 +14,7 @@ const Create = () => {
     >
       <Link
         display={"flex"}
-        to={"/"}
+        to={"/create"}
         as={RouterLink}
         alignItems={"center"}
         gap={4}
