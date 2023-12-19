@@ -3,7 +3,9 @@ import User from "../models/userModel.js";
 
 const createPost = async (req, res) => {
   try {
-    const { postedBy, text, img } = req.body;
+    const text = req.body.text;
+    const postedBy = req.body.postedBy;
+    const img = req.body.img;
 
     if (!text || !postedBy) {
       return res.status(400).json({ error: "Please fill all the fields" });
