@@ -25,7 +25,7 @@ const CreatePost = () => {
 
   const handleCreatePost = async (e) => {
     e.preventDefault();
-    console.log(user);
+
     try {
       const res = await fetch("/api/posts/create", {
         method: "POST",
@@ -35,15 +35,18 @@ const CreatePost = () => {
         body: JSON.stringify({
           postedBy: user._id,
           text: text,
-          img: "",
+          img: imgUrl,
         }),
       });
 
       const data = await res.json();
 
-      console.log(data);
+      if (data.error) {
+        alert(data.error);
+        console.log(data);
+      }
 
-      console.log({ text: text, postedBy: user._id, img: imgUrl });
+      console.log(data);
     } catch (err) {
       console.log(err);
       alert(err);
@@ -73,7 +76,7 @@ const CreatePost = () => {
       <Flex
         direction={{ base: "column", md: "row" }}
         gap={4}
-        w={{ base: "100%", sm: "95%", md: "80%" }}
+        w={{ base: "100%", sm: "90%", lg: "80%" }}
         mx={"auto"}
         p={4}
         px={2}

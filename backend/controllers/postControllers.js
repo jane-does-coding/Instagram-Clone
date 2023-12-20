@@ -1,13 +1,14 @@
 import Post from "../models/postModel.js";
 import User from "../models/userModel.js";
+import { v2 as cloudinary } from "cloudinary";
 
 const createPost = async (req, res) => {
   try {
     const text = req.body.text;
     const postedBy = req.body.postedBy;
-    const img = req.body.img;
+    let img = req.body.img;
 
-    console.log(img);
+    console.log(req.body);
 
     if (!text || !postedBy) {
       return res.status(400).json({ error: "Please fill all the fields" });
@@ -23,6 +24,12 @@ const createPost = async (req, res) => {
       return res.status(400).json({
         error: `Text must be at most ${maxLength} characters long`,
       });
+    }
+
+    if (img) {
+      const uploadedResponse = await cloudinary.uploader.upload(img);
+      img = uploadedResponse.secure_url;
+      console.log(img);
     }
 
     const newPost = new Post({ postedBy, text, img });
