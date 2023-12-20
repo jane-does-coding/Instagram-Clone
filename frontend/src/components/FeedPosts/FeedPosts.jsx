@@ -11,12 +11,31 @@ import FeedPost from "./FeedPost";
 import { useEffect, useState } from "react";
 
 const FeedPosts = () => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
+    setLoading(true);
+    const getFeedPosts = async () => {
+      try {
+        const res = await fetch("/api/posts/feed");
+        const data = await res.json();
+
+        if (data.error) {
+          alert(data.error);
+          console.log(data.error);
+        }
+
+        console.log(data);
+        setPosts(data);
+      } catch (err) {
+        console.log(err);
+        alert(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getFeedPosts();
   }, []);
 
   return (
@@ -42,30 +61,9 @@ const FeedPosts = () => {
       ) : (
         <>
           {/* POSTS */}
-          <FeedPost
-            img="https://placehold.co/800@2x.png"
-            title="First post"
-            avatar="https://placehold.co/800@2x.png"
-            username="janedoe_846"
-          />
-          <FeedPost
-            img="https://placehold.co/800@2x.png"
-            title="Second post"
-            avatar="https://placehold.co/800@2x.png"
-            username="johndoe_103"
-          />
-          <FeedPost
-            img="https://placehold.co/800@2x.png"
-            title="My awesome drawing of the Tower Bridge!"
-            avatar="https://placehold.co/800@2x.png"
-            username="burak_935"
-          />
-          <FeedPost
-            img="https://placehold.co/800@2x.png"
-            title="Fourth post"
-            avatar="https://placehold.co/800@2x.png"
-            username="anotheruser_026"
-          />
+          {posts.map((post) => (
+            <FeedPost key={post._id} post={post} postedBy={post.postedBy} />
+          ))}
         </>
       )}
     </Container>

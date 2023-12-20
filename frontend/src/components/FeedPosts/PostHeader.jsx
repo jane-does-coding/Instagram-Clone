@@ -1,6 +1,7 @@
 import { Avatar, Box, Flex, Text } from "@chakra-ui/react";
+import { formatDistanceToNow, formatDistanceToNowStrict } from "date-fns";
 
-const PostHeader = ({ username, avatar }) => {
+const PostHeader = ({ username, avatar, date }) => {
   return (
     <Flex alignItems={"center"} justifyContent={"space-between"} w={"full"}>
       <Flex gap={2} alignItems={"center"}>
@@ -17,7 +18,7 @@ const PostHeader = ({ username, avatar }) => {
             mx={2}
           />
           <Text color={"whiteAlpha.600"} fontSize={12}>
-            1w
+            {formatDistanceToNowStrict(new Date(date))} ago
           </Text>
         </Flex>
       </Flex>

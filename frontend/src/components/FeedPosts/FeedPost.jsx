@@ -1,15 +1,48 @@
 import { Box, Image } from "@chakra-ui/react";
 import PostFooter from "./PostFooter";
 import PostHeader from "./PostHeader";
+import { useEffect, useState } from "react";
 
-const FeedPost = ({ img, username, avatar, title }) => {
+const FeedPost = ({ post, postedBy }) => {
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const res = await fetch(`/api/users/profile/${postedBy}`);
+        const data = await res.json();
+        setUser(data);
+      } catch (err) {
+        console.log(err);
+        alert(err);
+      }
+    };
+
+    getUser();
+  }, []);
+
   return (
     <Box mb={12}>
-      <PostHeader username={username} avatar={avatar} />
+      {user ? (
+        <PostHeader
+          username={user.username || ""}
+          avatar={user.profilePic || ""}
+          date={post.createdAt}
+        />
+      ) : null}
+
       <Box>
-        <Image my={2} mb={4} src={img} alt="post image" borderRadius={"sm"} />
+        {post.img && (
+          <Image
+            my={2}
+            mb={4}
+            src={post.img}
+            alt="post image"
+            borderRadius={"sm"}
+          />
+        )}
       </Box>
-      <PostFooter title={title} />
+      <PostFooter post={post} />
     </Box>
   );
 };

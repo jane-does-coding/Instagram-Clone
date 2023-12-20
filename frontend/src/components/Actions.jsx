@@ -7,9 +7,9 @@ import {
 import { PiShareFat } from "react-icons/pi";
 import { useState } from "react";
 
-const Actions = () => {
+const Actions = ({ post }) => {
   const [liked, setLiked] = useState(false);
-  const [likes, setLikes] = useState(234);
+  const [likes, setLikes] = useState(post.likes.length);
 
   const handleLike = () => {
     if (liked) {
@@ -33,6 +33,18 @@ const Actions = () => {
         <Box cursor={"pointer"} fontSize={18}>
           <PiShareFat size={28} />
         </Box>
+      </Flex>
+      <Flex
+        fontWeight={600}
+        fontSize={"sm"}
+        display={"flex"}
+        alignItems={"center"}
+        gap={2}
+        color={"gray"}
+      >
+        {likes} likes{" "}
+        <Box borderRadius={"5px"} bg={"gray.500"} h={"3px"} w={"3px"} />
+        {post.replies.length} comments
       </Flex>
     </>
   );

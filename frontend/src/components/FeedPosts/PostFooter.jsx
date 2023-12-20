@@ -11,27 +11,13 @@ import React, { useState } from "react";
 import { GoPaperAirplane } from "react-icons/go";
 import Actions from "../Actions";
 
-const PostFooter = ({ title }) => {
-  const [likes, setLikes] = useState(234);
-
+const PostFooter = ({ post }) => {
   return (
     <Box>
       <Text fontSize={"sm"} fontWeight={500} my={2} mb={4}>
-        {title}
+        {post.text}
       </Text>
-      <Actions />
-      <Flex
-        fontWeight={600}
-        fontSize={"sm"}
-        display={"flex"}
-        alignItems={"center"}
-        gap={2}
-        color={"gray"}
-      >
-        {likes} likes{" "}
-        <Box borderRadius={"5px"} bg={"gray.500"} h={"3px"} w={"3px"} />
-        636 comments
-      </Flex>
+      <Actions post={post} />
 
       {/* Input */}
 
