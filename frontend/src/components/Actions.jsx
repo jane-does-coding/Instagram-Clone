@@ -6,16 +6,34 @@ import {
 } from "../assets/constants";
 import { PiShareFat } from "react-icons/pi";
 import { useState } from "react";
+import { useRecoilValue } from "recoil";
+import userAtom from "../atoms/userAtom";
 
 const Actions = ({ post }) => {
-  const [liked, setLiked] = useState(false);
+  const user = useRecoilValue(userAtom);
+  const [liked, setLiked] = useState(post.likes.includes(user._id));
   const [likes, setLikes] = useState(post.likes.length);
 
-  const handleLike = () => {
+  const handleLike = async () => {
     if (liked) {
       setLikes(likes - 1);
     } else {
       setLikes(likes + 1);
+    }
+
+    try {
+      const res = await fetch(`/api/posts/like/${post._id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+      alert(err);
     }
 
     setLiked(!liked);
