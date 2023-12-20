@@ -25,6 +25,7 @@ const CreatePost = () => {
 
   const handleCreatePost = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       const res = await fetch("/api/posts/create", {
@@ -46,10 +47,14 @@ const CreatePost = () => {
         console.log(data);
       }
 
+      alert(data.message);
       console.log(data);
+      navigate("/");
     } catch (err) {
       console.log(err);
       alert(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -152,7 +157,7 @@ const CreatePost = () => {
               cursor={loading ? "not-allowed" : null}
               onClick={handleCreatePost}
             >
-              Create
+              {loading ? "Loading..." : "Create"}
             </Button>
           </Flex>
         </Flex>

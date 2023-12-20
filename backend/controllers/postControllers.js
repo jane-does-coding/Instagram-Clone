@@ -8,8 +8,6 @@ const createPost = async (req, res) => {
     const postedBy = req.body.postedBy;
     let img = req.body.img;
 
-    console.log(req.body);
-
     if (!text || !postedBy) {
       return res.status(400).json({ error: "Please fill all the fields" });
     }
@@ -29,7 +27,6 @@ const createPost = async (req, res) => {
     if (img) {
       const uploadedResponse = await cloudinary.uploader.upload(img);
       img = uploadedResponse.secure_url;
-      console.log(img);
     }
 
     const newPost = new Post({ postedBy, text, img });
