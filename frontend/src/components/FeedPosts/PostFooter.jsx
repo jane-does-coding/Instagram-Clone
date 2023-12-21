@@ -12,6 +12,26 @@ import { GoPaperAirplane } from "react-icons/go";
 import Actions from "../Actions";
 
 const PostFooter = ({ post }) => {
+  const [comment, setComment] = useState("");
+
+  const handleComment = async () => {
+    try {
+      const res = await fetch(`/api/posts/reply/${post._id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ text: comment }),
+      });
+
+      const data = await res.json();
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+      alert(err);
+    }
+  };
+
   return (
     <Box>
       <Text fontSize={"sm"} fontWeight={500} my={2} mb={4}>
@@ -32,6 +52,10 @@ const PostFooter = ({ post }) => {
             placeholder="Add a comment"
             variant={"flushed"}
             fontSize={14}
+            value={comment}
+            onChange={(e) => {
+              setComment(e.target.value);
+            }}
           />
           <InputRightElement w={"fit-content"}>
             <Button
@@ -45,6 +69,7 @@ const PostFooter = ({ post }) => {
               top={0}
               maxH={"calc(100% - 2px)"}
               cursor={"pointer"}
+              onClick={handleComment}
             >
               <GoPaperAirplane size={18} />
             </Button>

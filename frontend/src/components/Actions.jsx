@@ -21,6 +21,8 @@ const Actions = ({ post }) => {
       setLikes(likes + 1);
     }
 
+    setLiked(!liked);
+
     try {
       const res = await fetch(`/api/posts/like/${post._id}`, {
         method: "POST",
@@ -35,8 +37,6 @@ const Actions = ({ post }) => {
       console.log(err);
       alert(err);
     }
-
-    setLiked(!liked);
   };
 
   return (
