@@ -22,7 +22,7 @@ import { MdDelete } from "react-icons/md";
 import Comment from "../Comment/Comment";
 import PostFooter from "../FeedPosts/PostFooter";
 
-const ProfilePost = ({ img }) => {
+const ProfilePost = ({ post, postedBy }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isComments, setIsComments] = useState(true);
 
@@ -68,7 +68,13 @@ const ProfilePost = ({ img }) => {
           </Flex>
         </Flex>
         {/* Image */}
-        <Image src={img} objectFit="cover" w="100%" h="100%" borderRadius={4} />
+        <Image
+          src={post.img}
+          objectFit="cover"
+          w="100%"
+          h="100%"
+          borderRadius={4}
+        />
       </GridItem>
 
       <Modal
@@ -91,7 +97,7 @@ const ProfilePost = ({ img }) => {
               {/* IMAGE */}
               <Box borderRadius={4} overflow={"hidden"} flex={1.25}>
                 <Image
-                  src={img}
+                  src={post.img}
                   maxH={"90vh"}
                   height={"100%"}
                   w={"100%"}
@@ -285,7 +291,11 @@ const ProfilePost = ({ img }) => {
                 {/*  */}
                 <Divider my={2} mb={4} bg={"gray.700"} />
                 <Box mt={"auto"} mb={2}>
-                  <PostFooter isProfilePage={true} likeCount={535} />
+                  <PostFooter
+                    isProfilePage={true}
+                    post={post}
+                    likeCount={535}
+                  />
                 </Box>
               </Flex>
             </Flex>

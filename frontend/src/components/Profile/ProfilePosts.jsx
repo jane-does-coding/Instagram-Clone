@@ -1,15 +1,33 @@
 import { Box, Grid, Skeleton, VStack } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import ProfilePost from "./ProfilePost";
+import { useRecoilValue } from "recoil";
+import { useParams } from "react-router-dom";
 
 const ProfilePosts = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const { username } = useParams();
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
-  });
+    const profilePosts = async () => {
+      setIsLoading(true);
+      try {
+        const res = await fetch(`/api/posts/user/${username}`);
+        const data = await res.json();
+
+        console.log(data);
+        setPosts(data);
+      } catch (err) {
+        console.log(err);
+        alert(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    profilePosts();
+  }, []);
 
   return (
     <Grid
@@ -32,14 +50,9 @@ const ProfilePosts = () => {
 
       {!isLoading && (
         <>
-          <ProfilePost img="https://placehold.co/800@2x.png" />
-          <ProfilePost img="https://placehold.co/800@2x.png" />
-          <ProfilePost img="https://placehold.co/800@2x.png" />
-          <ProfilePost img="https://placehold.co/800@2x.png" />
-          <ProfilePost img="https://placehold.co/800@2x.png" />
-          <ProfilePost img="https://placehold.co/800@2x.png" />
-          <ProfilePost img="https://placehold.co/800@2x.png" />
-          <ProfilePost img="https://placehold.co/800@2x.png" />
+          {posts.map((post) => (
+            <ProfilePost post={post} postedBy={""} key={post._id} />
+          ))}
         </>
       )}
     </Grid>
