@@ -53,6 +53,7 @@ const ProfilePosts = () => {
           {posts.map((post) => (
             <ProfilePost post={post} postedBy={""} key={post._id} />
           ))}
+          {posts == 0 && "No posts yet"}
         </>
       )}
     </Grid>

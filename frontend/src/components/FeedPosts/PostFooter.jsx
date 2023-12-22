@@ -7,11 +7,11 @@ import {
   InputRightElement,
   Text,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { GoPaperAirplane } from "react-icons/go";
 import Actions from "../Actions";
 
-const PostFooter = ({ post }) => {
+const PostFooter = ({ post, isProfilePage }) => {
   const [comment, setComment] = useState("");
 
   const handleComment = async () => {
@@ -34,9 +34,11 @@ const PostFooter = ({ post }) => {
 
   return (
     <Box>
-      <Text fontSize={"sm"} fontWeight={500} my={2} mb={4}>
-        {post.text}
-      </Text>
+      {!isProfilePage && (
+        <Text fontSize={"sm"} fontWeight={500} my={2} mb={4}>
+          {post.text}
+        </Text>
+      )}
       <Actions post={post} />
 
       {/* Input */}

@@ -15,7 +15,7 @@ import {
   VStack,
   useDisclosure,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { AiFillHeart } from "react-icons/ai";
 import { FaComment } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
@@ -56,7 +56,7 @@ const ProfilePost = ({ post, postedBy }) => {
             <Flex>
               <AiFillHeart size={20} />
               <Text fontWeight={"bold"} ml={2}>
-                39
+                {post.likes.length}
               </Text>
             </Flex>
             <Flex>
@@ -79,7 +79,7 @@ const ProfilePost = ({ post, postedBy }) => {
 
       <Modal
         isCentered={true}
-        size={{ base: "3xl", md: "2xl", lg: "3xl" }}
+        size={{ base: "3xl", md: "2xl", lg: "4xl" }}
         isOpen={isOpen}
         onClose={onClose}
       >
@@ -95,11 +95,17 @@ const ProfilePost = ({ post, postedBy }) => {
               mx={"auto"}
             >
               {/* IMAGE */}
-              <Box borderRadius={4} overflow={"hidden"} flex={1.25}>
+              <Box
+                borderRadius={4}
+                overflow={"hidden"}
+                flex={1}
+                display={"flex"}
+                alignItems={"center"}
+                justifyContent={"center"}
+              >
                 <Image
                   src={post.img}
-                  maxH={"90vh"}
-                  height={"100%"}
+                  maxH={"85vh"}
                   w={"100%"}
                   objectFit={"cover"}
                   borderRadius={4}
@@ -168,96 +174,31 @@ const ProfilePost = ({ post, postedBy }) => {
                     <VStack
                       w={"full"}
                       alignItems={"start"}
-                      maxH={"225px"}
+                      maxH={"30vh"}
                       overflowY={"auto"}
                     >
-                      <Comment
-                        createdAt="23d ago"
-                        username={"amelialastname"}
-                        profilePic={"/img1.png"}
-                        text={"Dummy Images from Unsplash"}
-                      />
-                      <Comment
-                        createdAt="1d ago"
-                        username={"user_.35317"}
-                        profilePic={"/img3.png"}
-                        text={"Nice Pic"}
-                      />
-                      <Comment
-                        createdAt="2w ago"
-                        username={"asaprogrammer_"}
-                        profilePic={"/img4.png"}
-                        text={"Cool"}
-                      />
-                      <Comment
-                        createdAt="23d ago"
-                        username={"amelialastname"}
-                        profilePic={"/img1.png"}
-                        text={"Dummy Images from Unsplash"}
-                      />
-                      <Comment
-                        createdAt="1d ago"
-                        username={"user_.35317"}
-                        profilePic={"/img3.png"}
-                        text={"Nice Pic"}
-                      />
-                      <Comment
-                        createdAt="2w ago"
-                        username={"asaprogrammer_"}
-                        profilePic={"/img4.png"}
-                        text={"Cool"}
-                      />
-                      <Comment
-                        createdAt="23d ago"
-                        username={"amelialastname"}
-                        profilePic={"/img1.png"}
-                        text={"Dummy Images from Unsplash"}
-                      />
-                      <Comment
-                        createdAt="1d ago"
-                        username={"user_.35317"}
-                        profilePic={"/img3.png"}
-                        text={"Nice Pic"}
-                      />
-                      <Comment
-                        createdAt="2w ago"
-                        username={"asaprogrammer_"}
-                        profilePic={"/img4.png"}
-                        text={"Cool"}
-                      />
-                      <Comment
-                        createdAt="23d ago"
-                        username={"amelialastname"}
-                        profilePic={"/img1.png"}
-                        text={"Dummy Images from Unsplash"}
-                      />
-                      <Comment
-                        createdAt="1d ago"
-                        username={"user_.35317"}
-                        profilePic={"/img3.png"}
-                        text={"Nice Pic"}
-                      />
-                      <Comment
-                        createdAt="2w ago"
-                        username={"asaprogrammer_"}
-                        profilePic={"/img4.png"}
-                        text={"Cool"}
-                      />
+                      {post.replies.map((reply) => (
+                        <Comment
+                          createdAt="23d ago"
+                          username={"amelialastname"}
+                          profilePic={"/img1.png"}
+                          text={"Dummy Images from Unsplash"}
+                          key={reply._id}
+                        />
+                      ))}
+                      {post.replies.length == 0 && (
+                        <Text textAlign={"center"} width={"100%"}>
+                          No comments
+                        </Text>
+                      )}
                     </VStack>
                   </>
                 ) : (
                   <>
-                    <Text fontSize={16}>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Dignissimos, aliquid!
-                    </Text>
-
-                    <Divider my={2} mb={4} bg={"gray.700"} />
-
                     <Text
                       fontSize={14}
                       color={"whiteAlpha.700"}
-                      maxH={"125px"}
+                      maxH={"30vh"}
                       overflowY={"auto"}
                     >
                       Lorem ipsum dolor sit amet consectetur, adipisicing elit.
@@ -291,11 +232,7 @@ const ProfilePost = ({ post, postedBy }) => {
                 {/*  */}
                 <Divider my={2} mb={4} bg={"gray.700"} />
                 <Box mt={"auto"} mb={2}>
-                  <PostFooter
-                    isProfilePage={true}
-                    post={post}
-                    likeCount={535}
-                  />
+                  <PostFooter isProfilePage={true} post={post} />
                 </Box>
               </Flex>
             </Flex>

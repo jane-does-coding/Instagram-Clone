@@ -45,6 +45,7 @@ const CreatePost = () => {
       if (data.error) {
         alert(data.error);
         console.log(data);
+        return;
       }
 
       alert(data.message);

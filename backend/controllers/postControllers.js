@@ -8,7 +8,7 @@ const createPost = async (req, res) => {
     const postedBy = req.body.postedBy;
     let img = req.body.img;
 
-    if (!text || !postedBy) {
+    if (!text || !postedBy || !img) {
       return res.status(400).json({ error: "Please fill all the fields" });
     }
 
