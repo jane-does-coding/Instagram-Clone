@@ -62,7 +62,7 @@ const ProfilePost = ({ post, postedBy }) => {
             <Flex>
               <FaComment size={20} />
               <Text fontWeight={"bold"} ml={2}>
-                13
+                {post.replies.length}
               </Text>
             </Flex>
           </Flex>
