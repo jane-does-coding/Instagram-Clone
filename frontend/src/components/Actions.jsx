@@ -8,6 +8,7 @@ import { PiShareFat } from "react-icons/pi";
 import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import userAtom from "../atoms/userAtom";
+import { BsBookmark } from "react-icons/bs";
 
 const Actions = ({ post }) => {
   const user = useRecoilValue(userAtom);
@@ -45,8 +46,8 @@ const Actions = ({ post }) => {
         <Box onClick={handleLike} cursor={"pointer"} fontSize={18}>
           {!liked ? <NotificationsLogo /> : <UnlikeLogo />}
         </Box>
-        <Box cursor={"pointer"} fontSize={18}>
-          <CommentLogo />
+        <Box cursor={"pointer"} fontSize={22}>
+          <BsBookmark />
         </Box>
         <Box cursor={"pointer"} fontSize={18}>
           <PiShareFat size={28} />

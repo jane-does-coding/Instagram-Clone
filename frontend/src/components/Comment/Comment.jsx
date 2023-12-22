@@ -1,4 +1,5 @@
 import { Avatar, Flex, Text } from "@chakra-ui/react";
+import { formatDistanceToNowStrict } from "date-fns";
 import React from "react";
 
 const Comment = ({ reply }) => {
@@ -23,7 +24,7 @@ const Comment = ({ reply }) => {
           </Text>
 
           <Text fontSize={12} color={"whiteAlpha.500"}>
-            {reply.createdAt}
+            {formatDistanceToNowStrict(new Date(reply.createdAt))} ago
           </Text>
         </Flex>
 

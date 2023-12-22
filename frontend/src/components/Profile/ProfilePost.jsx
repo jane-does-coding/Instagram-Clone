@@ -192,24 +192,12 @@ const ProfilePost = ({ post, postedBy }) => {
                 ) : (
                   <>
                     <Text
-                      fontSize={14}
-                      color={"whiteAlpha.700"}
+                      fontSize={16}
+                      color={"whiteAlpha.900"}
                       maxH={"30vh"}
                       overflowY={"auto"}
                     >
-                      Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                      Lorem ipsum dolor sit amet. Ratione, quo. Lorem ipsum
-                      dolor sit amet. Lorem ipsum, dolor sit amet consectetur
-                      adipisicing elit. Eius, nostrum! Lorem, ipsum dolor sit
-                      amet consectetur adipisicing elit. Eligendi iste iusto
-                      mollitia fuga impedit amet aliquam doloribus voluptate
-                      assumenda aut. Lorem ipsum dolor sit amet consectetur,
-                      adipisicing elit. Lorem ipsum dolor sit amet. Ratione,
-                      quo. Lorem ipsum dolor sit amet. Lorem ipsum, dolor sit
-                      amet consectetur adipisicing elit. Eius, nostrum! Lorem,
-                      ipsum dolor sit amet consectetur adipisicing elit.
-                      Eligendi iste iusto mollitia fuga impedit amet aliquam
-                      doloribus voluptate assumenda aut.
+                      {post.text}
                     </Text>
                     <Divider my={2} mt={4} bg={"gray.700"} />
                     <Flex
@@ -220,7 +208,8 @@ const ProfilePost = ({ post, postedBy }) => {
                     >
                       <Text>Date posted:</Text>{" "}
                       <Text as={"span"} fontSize={14} color={"white"}>
-                        April 9, 2008
+                        {formatDistanceToNowStrict(new Date(post.createdAt))}{" "}
+                        ago
                       </Text>
                     </Flex>
                   </>
