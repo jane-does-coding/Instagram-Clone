@@ -64,6 +64,11 @@ const FeedPosts = () => {
           {posts.map((post) => (
             <FeedPost key={post._id} post={post} postedBy={post.postedBy} />
           ))}
+          {posts.length == 0 && (
+            <Text width={"full"} textAlign={"center"}>
+              Follow people to see the feed
+            </Text>
+          )}
         </>
       )}
     </Container>

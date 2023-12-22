@@ -1,14 +1,14 @@
 import { Avatar, Flex, Text } from "@chakra-ui/react";
 import React from "react";
 
-const Comment = ({ createdAt, username, profilePic, text }) => {
+const Comment = ({ reply }) => {
   return (
     <Flex gap={4} alignItems={"center"} w={"full"}>
       <Avatar
-        src={profilePic}
+        src={reply.userProfilePic}
         alt={"pofile image"}
         size={"sm"}
-        name={username}
+        name={reply.username}
       />
 
       <Flex direction={"column"} w={"full"}>
@@ -19,16 +19,16 @@ const Comment = ({ createdAt, username, profilePic, text }) => {
           justifyContent={"space-between"}
         >
           <Text fontSize={12} color={"whiteAlpha.500"}>
-            {username}
+            {reply.username}
           </Text>
 
           <Text fontSize={12} color={"whiteAlpha.500"}>
-            {createdAt}
+            {reply.createdAt}
           </Text>
         </Flex>
 
         <Text fontSize={14} color={"whiteAlpha.800"}>
-          {text}
+          {reply.text}
         </Text>
       </Flex>
     </Flex>

@@ -21,10 +21,12 @@ import { FaComment } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import Comment from "../Comment/Comment";
 import PostFooter from "../FeedPosts/PostFooter";
+import { formatDistanceToNowStrict } from "date-fns";
 
 const ProfilePost = ({ post, postedBy }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isComments, setIsComments] = useState(true);
+  console.log(post.replies);
 
   return (
     <>
@@ -178,13 +180,7 @@ const ProfilePost = ({ post, postedBy }) => {
                       overflowY={"auto"}
                     >
                       {post.replies.map((reply) => (
-                        <Comment
-                          createdAt="23d ago"
-                          username={"amelialastname"}
-                          profilePic={"/img1.png"}
-                          text={"Dummy Images from Unsplash"}
-                          key={reply._id}
-                        />
+                        <Comment reply={reply} key={reply._id} />
                       ))}
                       {post.replies.length == 0 && (
                         <Text textAlign={"center"} width={"100%"}>
