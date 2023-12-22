@@ -1,5 +1,28 @@
 import mongoose from "mongoose";
 
+const replySchema = mongoose.Schema(
+  {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    text: {
+      type: String,
+      required: true,
+    },
+    userProfilePic: {
+      type: String,
+    },
+    username: {
+      type: String,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
 const postSchema = mongoose.Schema(
   {
     postedBy: {
@@ -24,25 +47,7 @@ const postSchema = mongoose.Schema(
       type: Number,
       default: 0,
     },
-    replies: [
-      {
-        userId: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "User",
-          required: true,
-        },
-        text: {
-          type: String,
-          required: true,
-        },
-        userProfilePic: {
-          type: String,
-        },
-        username: {
-          type: String,
-        },
-      },
-    ],
+    replies: [replySchema], // Use the replySchema for each reply in the array
   },
   {
     timestamps: true,
