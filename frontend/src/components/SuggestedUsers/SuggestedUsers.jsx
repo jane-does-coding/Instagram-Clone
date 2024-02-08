@@ -25,36 +25,29 @@ const SuggestedUsers = () => {
 
       <SuggestedUser
         followers={1625}
-        avatar={"https://placehold.co/800@2x.png"}
+        avatar={"https://picsum.photos/200/300"}
         name={"Emily Rodriguez"}
       />
       <SuggestedUser
         followers={53}
-        avatar={"https://placehold.co/800@2x.png"}
+        avatar={"https://picsum.photos/200/300"}
         name={"Benjamin Taylor"}
       />
       <SuggestedUser
         followers={173}
-        avatar={"https://placehold.co/800@2x.png"}
+        avatar={"https://picsum.photos/200/300"}
         name={"Mia Johnson"}
       />
       <SuggestedUser
         followers={938}
-        avatar={"https://placehold.co/800@2x.png"}
+        avatar={"https://picsum.photos/200/300"}
         name={"Sophia Martinez"}
       />
       <SuggestedUser
         followers={532}
-        avatar={"https://placehold.co/800@2x.png"}
+        avatar={"https://picsum.photos/200/300"}
         name={"Liam Anderson"}
       />
-
-      <Box fontSize={12} color={"whiteAlpha.400"} mt={5} mr={"auto"}>
-        &copy; 2023 Built by{" "}
-        <Text color="blue.600" cursor={"pointer"} as={"span"}>
-          As a programmer
-        </Text>
-      </Box>
     </VStack>
   );
 };
