@@ -1,6 +1,6 @@
 # Instagram Clone
 
-
+<img width="526" alt="insta" src="https://github.com/YevheniiaSimaka/Instagram-Clone/assets/112284703/aaf67134-8d14-4595-b0d7-216dc692eb24">
 
 ## The clone of everyone's favorite social media platform - Instagram!
 
